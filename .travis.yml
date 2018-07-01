@@ -1,9 +1,9 @@
 
 language: csharp
-solution: CrossCommon.sln
+solution: SimpleMVP.sln
 dotnet: 2.0.0
 mono: 5.10.1
 install:
-  - nuget restore CrossCommon.sln
+  - nuget restore SimpleMVP.sln
 script:
-  - msbuild /p:Configuration=Release CrossCommon.sln
+  - msbuild /p:Configuration=Release SimpleMVP.sln
