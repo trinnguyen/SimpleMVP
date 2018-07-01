@@ -3,6 +3,7 @@ language: csharp
 solution: SimpleMVP.sln
 dotnet: 2.0.0
 mono: 5.10.1
+os: osx
 install:
   - nuget restore SimpleMVP.sln
 script:
