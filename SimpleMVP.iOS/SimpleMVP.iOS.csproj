@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleMVP\SimpleMVP.csproj">
-      <Project>{C1163B56-07B6-417D-B9B3-68E01FC8AF3F}</Project>
+      <Project>{0D99A960-560B-424F-89FE-67E1D3525C9E}</Project>
       <Name>SimpleMVP</Name>
     </ProjectReference>
   </ItemGroup>
