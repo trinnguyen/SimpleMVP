@@ -21,6 +21,10 @@ namespace SimpleMVP.iOS
         {
         }
 
+        public ViewControllerBase(IntPtr handle) : base(handle)
+        {
+        }
+
         public ViewControllerBase(NSCoder coder) : base(coder)
         {
         }
