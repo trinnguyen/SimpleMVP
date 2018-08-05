@@ -80,8 +80,7 @@ namespace SimpleMVP.Droid
         /// </summary>
         /// <param name="view"></param>
         /// <param name="savedInstanceState"></param>
-        protected virtual void InitializeView(View view, Bundle savedInstanceState)
-        {}
+        protected abstract void InitializeView(View view, Bundle savedInstanceState);
 
         protected abstract IPresenter CreatePresenter();
 
