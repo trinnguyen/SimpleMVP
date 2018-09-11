@@ -62,8 +62,8 @@ namespace SimpleMVP.iOS
 
         public override void ViewDidDisappear(bool animated)
         {
-            Presenter?.OnDisappearing();
             base.ViewDidDisappear(animated);
+            Presenter?.OnDisappearing();
         }
 
         protected virtual void OnPresenterSet()
