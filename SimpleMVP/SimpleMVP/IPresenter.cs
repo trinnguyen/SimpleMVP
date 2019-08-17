@@ -7,25 +7,26 @@ namespace SimpleMVP
         /// <summary>
         /// Attach the view to Presenter
         /// Called by platform when the View is loaded and attached to the Window
+        /// Followed by OnStart()
         /// iOS: ViewWillAppear()
-        /// Android: Called on OnCreate() by Fragment, OnViewCreated() on Activity
+        /// Android: Called on OnStart() by Fragment, OnStart() on Activity
         /// </summary>
         /// <param name="view">View.</param>
         void AttachView(IView view);
 
         /// <summary>
         /// Notify that the view is resuming, register subscription and start job
-        /// Android: OnStart()
+        /// Android: OnResume()
         /// iOS: ViewWillAppear()
         /// </summary>
         void OnAppearing();
 
         /// <summary>
         /// Notify that the view is pausing/disappearing, unregister all subscription and stop job
-        /// Android: OnStop()
+        /// Android: OnPause()
         /// iOS: ViewDidDisappear()
         /// </summary>
-        void OnDisappearing();
+        //void OnDisappearing();
 
         /// <summary>
         /// Detach View from Window

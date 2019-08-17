@@ -11,9 +11,9 @@ namespace SimpleMVP.Droid
 
     public abstract class ActivityBase : StateAppCompatActivity, IView
     {
-        public IPresenter Presenter { get; private set; }
+        protected IPresenter Presenter { get; private set; }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -24,22 +24,10 @@ namespace SimpleMVP.Droid
             AttachPresenter();
         }
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-            Presenter?.OnAppearing();
-        }
-
-        protected override void OnStop()
-        {
-            Presenter?.OnDisappearing();
-            base.OnStop();
-        }
-
         protected override void OnDestroy()
         {
-            DetachPresenter();
             base.OnDestroy();
+            DetachPresenter();
         }
 
         private void AttachPresenter()
@@ -56,6 +44,9 @@ namespace SimpleMVP.Droid
 
             // attach view
             Presenter?.AttachView(this);
+
+            // on appearing
+            Presenter?.OnAppearing();
         }
 
         private void DetachPresenter()
@@ -69,19 +60,14 @@ namespace SimpleMVP.Droid
         /// Init view OnCreate before Presetner is created
         /// </summary>
         /// <param name="savedInstanceState"></param>
-        protected abstract void InitializeView(Bundle savedInstanceState);
+        protected virtual void InitializeView(Bundle savedInstanceState)
+        {
+        }
 
         protected abstract IPresenter CreatePresenter();
 
         protected virtual void OnPresenterSet()
         {
         }
-
-#if DEBUG
-        ~ActivityBase()
-        {
-            System.Diagnostics.Debug.WriteLine($"{GetType().Name} -> ~ActivityBase");
-        }
-#endif
     }
 }

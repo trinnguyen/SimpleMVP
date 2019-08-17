@@ -25,8 +25,8 @@ namespace SimpleMVP.Droid
 
 		protected override void OnPause()
 		{
-            IsVisibleAndRunning = false;
             base.OnPause();
+            IsVisibleAndRunning = false;
 		}
 	}
 }

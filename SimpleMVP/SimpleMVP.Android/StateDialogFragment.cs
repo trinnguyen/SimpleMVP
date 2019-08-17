@@ -2,30 +2,23 @@
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
 
 namespace SimpleMVP.Droid
 {
-	public class StateDialogFragment : Android.Support.V4.App.DialogFragment
+	public class StateDialogFragment : AppCompatDialogFragment
     {      
-		private bool _markAsSuccess = false;
-
         // required ctor
 		protected StateDialogFragment()
         {
         }
 
-        public override void OnCancel(IDialogInterface dialog)
+        public override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCancel(dialog);
-            _markAsSuccess = false;
+            base.OnCreate(savedInstanceState);
+            Cancelable = false;
         }
 
-        public override void OnDismiss(IDialogInterface dialog)
-        {
-            base.OnDismiss(dialog);
-            OnDialogDismissed(_markAsSuccess);
-        }
-        
         /// <summary>
         /// Event raised when dialog is dismissed
         /// </summary>
@@ -34,13 +27,6 @@ namespace SimpleMVP.Droid
         {
 			System.Diagnostics.Debug.WriteLine($"{GetType().Name} -> OnDialogDismissed: {markAsSuccess}");
         }
-
-        public override void OnStart()
-        {
-            base.OnStart();
-            // reset
-            _markAsSuccess = false;
-        }
               
         /// <summary>
         /// Used for dialog dismiss
@@ -48,12 +34,11 @@ namespace SimpleMVP.Droid
         /// <param name="markAsSuccess">If set to <c>true</c> mark as success.</param>
         protected void RequestDismiss(bool markAsSuccess)
         {
-            _markAsSuccess = markAsSuccess;
 			if (!IsStateSaved)
 			{
 				Dismiss();
-			}         
-        }      
-
+                OnDialogDismissed(markAsSuccess);
+            }
+        }
     }
 }

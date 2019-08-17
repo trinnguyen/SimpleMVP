@@ -1,13 +1,11 @@
-﻿using System;
-using Android.OS;
-using Android.Support.V4.App;
+﻿using Android.OS;
 using Android.Views;
 
 namespace SimpleMVP.Droid
 {
-    public abstract class FragmentBase<TPresenter> : FragmentBase where TPresenter : IPresenter
+	public abstract class DialogFragmentBase<TPresenter> : DialogFragmentBase where TPresenter : IPresenter
     {
-        protected FragmentBase()
+        protected DialogFragmentBase()
         {
         }
         
@@ -15,11 +13,11 @@ namespace SimpleMVP.Droid
             base.Presenter is TPresenter typedPresenter ? typedPresenter : default(TPresenter);
     }
     
-    public abstract class FragmentBase : StateFragment, IView
+	public abstract class DialogFragmentBase : StateDialogFragment, IView
     {
         protected IPresenter Presenter { get; private set; }
 
-        protected FragmentBase()
+        protected DialogFragmentBase()
         {
         }
 
@@ -28,28 +26,16 @@ namespace SimpleMVP.Droid
             base.OnViewCreated(view, savedInstanceState);
             
             // init view
-            InitializeView(view, savedInstanceState);
+            InitializeView(view);
 
             // attach view
             AttachPresenter();
         }
 
-        public override void OnStart()
-        {
-            base.OnStart();
-            Presenter?.OnAppearing();
-        }
-
-        public override void OnStop()
-        {
-            Presenter?.OnDisappearing();
-            base.OnStop();
-        }
-
         public override void OnDestroyView()
         {
-            DetachPresenter();
             base.OnDestroyView();
+            DetachPresenter();
         }
 
         private void AttachPresenter()
@@ -66,11 +52,13 @@ namespace SimpleMVP.Droid
 
             // attach view
             Presenter?.AttachView(this);
+
+            // on appearing
+            Presenter?.OnAppearing();
         }
 
         private void DetachPresenter()
         {
-            // detach view
             Presenter?.DetachView();
             Presenter = null;
         }
@@ -79,20 +67,12 @@ namespace SimpleMVP.Droid
         /// Init view OnViewCreated before Presenter is created
         /// </summary>
         /// <param name="view"></param>
-        /// <param name="savedInstanceState"></param>
-        protected abstract void InitializeView(View view, Bundle savedInstanceState);
+        protected abstract void InitializeView(View view);
 
         protected abstract IPresenter CreatePresenter();
 
         protected virtual void OnPresenterSet()
         {
         }
-
-#if DEBUG
-        ~FragmentBase()
-        {
-            System.Diagnostics.Debug.WriteLine($"{GetType().Name} -> ~FragmentBase");
-        }
-#endif
     }
 }
